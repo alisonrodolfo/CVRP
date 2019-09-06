@@ -1,2 +1,4 @@
 com\alisonbarreiro\cvrp\MainApp.class
 com\alisonbarreiro\cvrp\FXMLController.class
+Model\Vertice.class
+Model\Instancia.class
