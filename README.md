@@ -3,7 +3,17 @@
 Como interpretar os arquivos:
 
 -) O número de vértices pode ser encontrado no campo DIMENSION.
+-) O número de veículos pode ser encontrado no campo VEHICLES.
+-) A capacidade de cada veículo pode ser encontrada no campo CAPACITY.
+-) A demanda de cada cliente pode ser encontrada no campo DEMAND_SECTION.
+-) A matriz de custos pode ser encontrada no campo EDGE_WEIGHT_SECTION.
 
--) As coordenadas (x, y) de cada vértice do grafo podem ser encontradas no campo DISPLAY_DATA_SECTION
-
--) Os grafos representados nas istâncias são completos e não-orientados, e o valor de cada aresta é dado pela distância euclidiana entre os dois pontos, arredondando o valor resultante para o inteiro mais próximo.
+Soluções ótimas
+-) P-n16-k8 = 450
+-) P-n19-k2 = 212
+-) P-n20-k2 = 216
+-) P-n23-k8 = 529
+-) P-n55-k7 = 510
+-) P-n51-k10 = 696
+-) P-n50-k10 = 741
+-) P-n45-k5 = 568
