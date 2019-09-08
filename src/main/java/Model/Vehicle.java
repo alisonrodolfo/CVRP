@@ -76,18 +76,15 @@ public class Vehicle {
         this.caminhoFeito = caminhoFeito;
     }
 
-    
+    public boolean verificaCargaAtual(int demandaCliente) {
+        return (demandaCliente <= cargaAtual);
+    }
    
-
-    //adicionar cliente na rota do veículo
-    public void AddClient(Vertice vertice) {
+    public void newVertice(Vertice vertice) {
         rota.add(vertice);
         this.cargaAtual -= vertice.getDemanda();
         this.verticeAtual = vertice.getId();
     }
 
-    //Checar a violação da capacidade
-    public boolean CheckIfFits(int dem) {
-        return (dem <= cargaAtual);
-    }
+   
 }

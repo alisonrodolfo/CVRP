@@ -69,8 +69,8 @@ public class FXMLController implements Initializable {
 
             vehicles.add(new Vehicle(VEHICLE_CAPACITY, VEHICLE_CAPACITY, verticeAtual, false, 0));
 
-            //adiciona o deposito no inicio da rota do veiculo
-            vehicles.get(i).AddClient(vertices.get(0));
+            //adiciona o deposito no inicio da rota
+            vehicles.get(i).newVertice(vertices.get(0));
             vertices.get(0).setIsVisitado(true);
 
             for (int j = 0; j < NUM_VERTICE;) {
@@ -82,7 +82,7 @@ public class FXMLController implements Initializable {
                     //Se o elemento nao foi visitado
                     if (vertices.get(n).isIsVisitado() == false) {
                         //System.out.println("G "+vehicles[i].getCargaAtual()+" D: "+vertices.get(n).getDemanda());
-                        if (vehicles.get(i).CheckIfFits(vertices.get(n).getDemanda())) {
+                        if (vehicles.get(i).verificaCargaAtual(vertices.get(n).getDemanda())) {
                             if (arestas.get(j).get(n).getPeso() != 0 && arestas.get(j).get(n).getPeso() < menorDistancia) {
                                 menorDistancia = arestas.get(j).get(n).getPeso();
                                 //atualiza o cliente
@@ -101,7 +101,7 @@ public class FXMLController implements Initializable {
                 if (vertices.get(verticeAtual).isIsVisitado() == false) {
 
                     vertices.get(verticeAtual).setIsVisitado(true);
-                    vehicles.get(i).AddClient(vertices.get(verticeAtual));
+                    vehicles.get(i).newVertice(vertices.get(verticeAtual));
                     vehicles.get(i).setCaminhoFeito(custoTotalAresta);
 
                     custoTotalAresta += arestas.get(j).get(verticeAtual).getPeso();
@@ -112,7 +112,7 @@ public class FXMLController implements Initializable {
                 }
 
             }
-            vehicles.get(i).AddClient(vertices.get(0));
+            vehicles.get(i).newVertice(vertices.get(0));
             custoTotalAresta += arestas.get(verticeAtual).get(0).getPeso();
             vehicles.get(i).setCaminhoFeito(custoTotalAresta);
 
