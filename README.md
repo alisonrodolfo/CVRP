@@ -1,4 +1,4 @@
-# Problema de Roteamento de Véıculos Capacitados (do inglês The Capacitated Vehicle Routing Problem - CVRP).
+# Problema de Roteamento de Véıculos Capacitados (Capacitated Vehicle Routing Problem - CVRP).
 
 # Como interpretar os arquivos:
 
