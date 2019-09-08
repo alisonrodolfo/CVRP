@@ -229,7 +229,7 @@ public class FXMLController implements Initializable {
 
         ArrayList<Vehicle> auxVehicles = new ArrayList<Vehicle>();
         Vehicle theAuxVehicles = null;
-        
+
         ArrayList<Vehicle> definitiveVehicles = new ArrayList<Vehicle>();
 
         for (int i = 0; i < NUM_VEHICLES; i++) {
@@ -242,28 +242,20 @@ public class FXMLController implements Initializable {
             }
 
             auxVehicles.clear();
-            int intaux1 = 1, intaux2 = 2;
             for (int n = 1; n < (vehicles.get(i).getRota().size() - 2); n++) {
                 //System.out.println(" V: "+((vehicles.get(i).getRota().size() - 2)/2));
-                
+
                 auxVehicles.add(new Vehicle(vehicles.get(i).getCapacidadeTotal(), vehicles.get(i).getCargaAtual(),
                         vehicles.get(i).getVerticeAtual(), vehicles.get(i).isIsEntragando(), vehicles.get(i).getCaminhoFeito()));
 
                 auxVehicles.get(n - 1).setRota((Vector<Vertice>) vehicles.get(i).getRota().clone());
-                
+
                 Vertice auxVertice;
 
                 auxVertice = auxVehicles.get(n - 1).getRota().get(n);
 
-                auxVehicles.get(n - 1).getRota().set(n, auxVehicles.get(n-1).getRota().get(n+1));
-                auxVehicles.get(n - 1).getRota().set(n+1, auxVertice);
-                
-                //System.out.println("AUX1: "+intaux1+" AUX2: "+(intaux2));
-                
-                intaux1 += 2;
-                intaux2 += 2;
-                
-                
+                auxVehicles.get(n - 1).getRota().set(n, auxVehicles.get(n - 1).getRota().get(n + 1));
+                auxVehicles.get(n - 1).getRota().set(n + 1, auxVertice);
 
                 custoTotalAresta2 = 0;
                 for (int j1 = 0, j2 = 1; j1 < vehicles.get(i).getRota().size() - 1; j1++, j2++) {
@@ -272,21 +264,57 @@ public class FXMLController implements Initializable {
                     custoTotalAresta2 += arestas.get(aux1).get(aux2).getPeso();
 
                 }
-                
-                if(custoTotalAresta2<custoTotalAresta1){
-                    
+
+                if (custoTotalAresta2 < custoTotalAresta1) {
+
                     //System.err.println("Custo "+custoTotalAresta2);
                     custoTotalAresta1 = custoTotalAresta2;
                     theAuxVehicles = auxVehicles.get(n - 1);
                 }
-                
+
             }
-            
+
+            Vehicle theAuxVehicles2 = new Vehicle(theAuxVehicles.getCapacidadeTotal(), theAuxVehicles.getCargaAtual(),
+                    theAuxVehicles.getVerticeAtual(), theAuxVehicles.isIsEntragando(), theAuxVehicles.getCaminhoFeito());
+            theAuxVehicles2.setRota((Vector<Vertice>) theAuxVehicles.getRota().clone());
+
+            int menorDistancia = Integer.MAX_VALUE, verticeAtual = 1;
+            for (int x = 1; x < (theAuxVehicles2.getRota().size() - 1); x++) {
+
+                if (arestas.get(x).get(0).getPeso() != 0 && arestas.get(x).get(0).getPeso() < menorDistancia) {
+                    //System.out.println("X: " + x + " A: " + arestas.get(x).get(0).getU() + " P: " + arestas.get(x).get(0).getPeso());
+                    menorDistancia = arestas.get(x).get(0).getPeso();
+                    //atualiza o cliente
+                    verticeAtual = x;
+                }
+            }
+
+            for (int x = 4; x < (theAuxVehicles2.getRota().size() - 1); x++) {
+                if (theAuxVehicles2.getRota().get(x).getId() == verticeAtual) {
+                    Vertice vertAux = theAuxVehicles2.getRota().get(x);
+                    theAuxVehicles2.getRota().set(x, theAuxVehicles2.getRota().get((theAuxVehicles2.getRota().size() - 2)));
+                    theAuxVehicles2.getRota().set((theAuxVehicles2.getRota().size() - 2), vertAux);
+                }
+            }
+            int custoTotalAresta3 = 0;
+            for (int j1 = 0, j2 = 1; j1 < theAuxVehicles2.getRota().size() - 1; j1++, j2++) {
+                aux1 = theAuxVehicles2.getRota().get(j1).getId();
+                aux2 = theAuxVehicles2.getRota().get(j2).getId();
+                custoTotalAresta3 += arestas.get(aux1).get(aux2).getPeso();
+
+            }
+
+            if (custoTotalAresta3 < custoTotalAresta1) {
+
+                System.out.println("D: " + custoTotalAresta3 + " DU: " + custoTotalAresta1);
+
+                custoTotalAresta1 = custoTotalAresta3;
+                theAuxVehicles = theAuxVehicles2;
+            }
+
             definitiveVehicles.add(theAuxVehicles);
-            
+
         }
-        
-        
 
         this.imprimiRota(definitiveVehicles);
     }
