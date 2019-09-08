@@ -10,5 +10,36 @@ package Model;
  * @author Alison Rodolfo
  */
 public class Aresta {
-    
+
+    private int peso;
+    private int u;
+
+    public Aresta(int peso, int u) {
+        this.peso = peso;
+        this.u = u;
+    }
+
+    public int getPeso() {
+        return peso;
+    }
+
+    public void setPeso(int peso) {
+        this.peso = peso;
+    }
+
+    public int getU() {
+        return u;
+    }
+
+    public void setU(int u) {
+        this.u = u;
+    }
+
+    @Override
+    public String toString() {
+        return "Aresta{" + "peso=" + peso + ", u=" + u + '}';
+    }
+
+
+
 }
