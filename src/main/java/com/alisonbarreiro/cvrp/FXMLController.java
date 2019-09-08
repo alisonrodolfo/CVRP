@@ -278,6 +278,11 @@ public class FXMLController implements Initializable {
                     theAuxVehicles.getVerticeAtual(), theAuxVehicles.isIsEntragando(), theAuxVehicles.getCaminhoFeito());
             theAuxVehicles2.setRota((Vector<Vertice>) theAuxVehicles.getRota().clone());
 
+            Vertice vertAux = theAuxVehicles2.getRota().get(1);
+            theAuxVehicles2.getRota().set(1, theAuxVehicles2.getRota().get((theAuxVehicles2.getRota().size() - 2)));
+            theAuxVehicles2.getRota().set((theAuxVehicles2.getRota().size() - 2), vertAux);
+
+            /*
             int menorDistancia = Integer.MAX_VALUE, verticeAtual = 1;
             for (int x = 1; x < (theAuxVehicles2.getRota().size() - 1); x++) {
 
@@ -288,14 +293,16 @@ public class FXMLController implements Initializable {
                     verticeAtual = x;
                 }
             }
+            
 
-            for (int x = 4; x < (theAuxVehicles2.getRota().size() - 1); x++) {
+            for (int x = 1; x < (theAuxVehicles2.getRota().size() - 1); x++) {
                 if (theAuxVehicles2.getRota().get(x).getId() == verticeAtual) {
                     Vertice vertAux = theAuxVehicles2.getRota().get(x);
                     theAuxVehicles2.getRota().set(x, theAuxVehicles2.getRota().get((theAuxVehicles2.getRota().size() - 2)));
                     theAuxVehicles2.getRota().set((theAuxVehicles2.getRota().size() - 2), vertAux);
                 }
             }
+             */
             int custoTotalAresta3 = 0;
             for (int j1 = 0, j2 = 1; j1 < theAuxVehicles2.getRota().size() - 1; j1++, j2++) {
                 aux1 = theAuxVehicles2.getRota().get(j1).getId();
@@ -306,8 +313,7 @@ public class FXMLController implements Initializable {
 
             if (custoTotalAresta3 < custoTotalAresta1) {
 
-                System.out.println("D: " + custoTotalAresta3 + " DU: " + custoTotalAresta1);
-
+                // System.out.println("D: " + custoTotalAresta3 + " DU: " + custoTotalAresta1);
                 custoTotalAresta1 = custoTotalAresta3;
                 theAuxVehicles = theAuxVehicles2;
             }
