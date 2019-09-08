@@ -29,7 +29,10 @@ Neste projeto vai conter:
    *  Implementação do algoritmo de busca local chamado VND (Variable Neighborhood Descent)
 
 
-# O motor é desenvolvido é baseado em Java.
+# O motor é desenvolvido é baseado em JavaFX.
+
+Para Compilar o projeto de forma fácil, basta abrir utilizando Apache NetBeans 11 
+
 
 
 # Introdução
