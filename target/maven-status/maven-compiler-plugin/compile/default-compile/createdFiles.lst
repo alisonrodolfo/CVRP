@@ -1,8 +1,6 @@
 com\alisonbarreiro\cvrp\MainApp.class
-com\alisonbarreiro\cvrp\Fachada.class
 Model\Aresta.class
-com\alisonbarreiro\cvrp\heuri?stica.class
 com\alisonbarreiro\cvrp\FXMLController.class
 Model\Vertice.class
+com\alisonbarreiro\cvrp\FXMLController$1.class
 Model\Vehicle.class
-Model\Instancia.class

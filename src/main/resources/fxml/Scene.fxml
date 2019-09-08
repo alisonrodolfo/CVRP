@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml" fx:controller="com.alisonbarreiro.cvrp.FXMLController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="596.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alisonbarreiro.cvrp.FXMLController">
     <children>
-        <Button layoutX="126" layoutY="90" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
+        <Label id="NAME" fx:id="label" layoutX="295.0" layoutY="111.0" minHeight="16" minWidth="69" text="NAME:" />
+      <TextArea fx:id="textArea" editable="false" layoutX="140.0" layoutY="289.0" prefHeight="256.0" prefWidth="624.0" />
+      <ChoiceBox fx:id="choiceBox" layoutX="263.0" layoutY="37.0" prefHeight="47.0" prefWidth="341.0" />
+      <Label id="DIMENSION" layoutX="295.0" layoutY="137.0" text="DIMENSION:" />
+      <Label id="VEHICLES" layoutX="295.0" layoutY="166.0" text="VEHICLES:" />
+      <Label id="CAPACITY" layoutX="296.0" layoutY="192.0" text="CAPACITY:" />
+      <TextField id="textname" fx:id="textname" disable="true" editable="false" layoutX="433.0" layoutY="106.0" />
+      <TextField id="textdimension" fx:id="textdimension" disable="true" editable="false" layoutX="433.0" layoutY="133.0" />
+      <TextField id="textvehicles" fx:id="textvehicles" disable="true" editable="false" layoutX="433.0" layoutY="161.0" />
+      <TextField id="textcapacity" fx:id="textcapacity" disable="true" editable="false" layoutX="433.0" layoutY="188.0" />
     </children>
 </AnchorPane>

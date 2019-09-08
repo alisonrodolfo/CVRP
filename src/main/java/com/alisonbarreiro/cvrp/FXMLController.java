@@ -10,10 +10,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 public class FXMLController implements Initializable {
 
@@ -39,17 +44,53 @@ public class FXMLController implements Initializable {
     private Label label;
 
     @FXML
-    private void handleButtonAction(ActionEvent event) {
+    private ChoiceBox choiceBox;
+    
+    @FXML
+    private TextArea textArea;
+    
+    @FXML
+    private TextField textname; 
+    @FXML
+    private TextField textdimension; 
+    @FXML
+    private TextField textvehicles; 
+    @FXML
+    private TextField textcapacity; 
 
-    }
+
+    String optEscolhida[]
+            = {"P-n19-k2.txt", "P-n20-k2.txt", "P-n23-k8.txt",
+                "P-n45-k5.txt", "P-n50-k10.txt",
+                "P-n51-k10.txt", "P-n55-k7.txt"};
+
+
+    // Create action event 
+    EventHandler<ActionEvent> value = new EventHandler<ActionEvent>() {
+        public void handle(ActionEvent e) {
+            vertices.clear();
+            arestas.clear();
+            vehicles.clear();
+            VEHICLE_CAPACITY = 0;
+            NUM_VERTICE = 0;
+            NUM_VEHICLES = 0;
+            
+            textArea.setText("");
+            
+            addAll("src/main/resources/instancias_teste/" + choiceBox.getValue());
+            // read the data
+
+            vizinhoMaisProximo();
+        }
+    };
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        this.addAll("src/main/resources/instancias_teste/P-n19-k2.txt");
-        // read the data
 
-        this.vizinhoMaisProximo();
+        choiceBox.setItems(FXCollections.observableArrayList(optEscolhida));
+
+        choiceBox.setOnAction(value);
 
     }
 
@@ -81,7 +122,6 @@ public class FXMLController implements Initializable {
 
                     //Se o elemento nao foi visitado
                     if (vertices.get(n).isIsVisitado() == false) {
-                        //System.out.println("G "+vehicles[i].getCargaAtual()+" D: "+vertices.get(n).getDemanda());
                         if (vehicles.get(i).verificaCargaAtual(vertices.get(n).getDemanda())) {
                             if (arestas.get(j).get(n).getPeso() != 0 && arestas.get(j).get(n).getPeso() < menorDistancia) {
                                 menorDistancia = arestas.get(j).get(n).getPeso();
@@ -135,15 +175,19 @@ public class FXMLController implements Initializable {
 
                 if (dados.startsWith(NAME)) {
                     System.out.println("NOME: " + dados.substring(NAME.length()).replaceAll("\\s+", ""));
+                    textname.setText(dados.substring(NAME.length()).replaceAll("\\s+", ""));
                 } else if (dados.startsWith(DIMENSION)) {
                     System.out.println("DIMENSION: " + dados.substring(DIMENSION.length()).replaceAll("\\s+", ""));
                     NUM_VERTICE = Integer.parseInt(dados.substring(DIMENSION.length()).replaceAll("\\s+", ""));
+                    textdimension.setText(dados.substring(DIMENSION.length()).replaceAll("\\s+", "")); 
                 } else if (dados.startsWith(VEHICLES)) {
                     System.out.println("VEHICLES: " + dados.substring(VEHICLES.length()).replaceAll("\\s+", ""));
                     NUM_VEHICLES = Integer.parseInt(dados.substring(VEHICLES.length()).replaceAll("\\s+", ""));
+                    textvehicles.setText(dados.substring(VEHICLES.length()).replaceAll("\\s+", "")); 
                 } else if (dados.startsWith(CAPACITY)) {
                     System.out.println("CAPACITY: " + dados.substring(CAPACITY.length()).replaceAll("\\s+", ""));
                     VEHICLE_CAPACITY = Integer.parseInt(dados.substring(CAPACITY.length()).replaceAll("\\s+", ""));
+                    textcapacity.setText(dados.substring(CAPACITY.length()).replaceAll("\\s+", "")); 
                 } else if (dados.startsWith("DEMAND_SECTION:")) {
                     linha = lerArq.readLine();
                     break;
@@ -194,14 +238,17 @@ public class FXMLController implements Initializable {
         int clientesAtendidos = 0;
         int custoTotalAresta;
         int custoTotal = 0;
+        String print = "";
         for (int i = 0; i < NUM_VEHICLES; i++) {
             custoTotalAresta = 0;
             int clientes = 0;
-            System.out.print("[DEPOSITO -> ");
+            print += "[DEPOSITO -> ";
             for (int j = 0; j < auxVehicles.get(i).getRota().size(); j++) {
-                System.out.print(auxVehicles.get(i).getRota().get(j).getId() + " -> ");
+                print += auxVehicles.get(i).getRota().get(j).getId() + " -> ";
             }
-            System.out.println(" DEPOSITO]");
+            print += " DEPOSITO]\n";
+            
+            
 
             int aux1, aux2;
             for (int j1 = 0, j2 = 1; j1 < vehicles.get(i).getRota().size() - 1; j1++, j2++) {
@@ -212,17 +259,21 @@ public class FXMLController implements Initializable {
             }
 
             custoTotal += custoTotalAresta;
-            System.out.println("custoTotalAresta: " + custoTotalAresta);
-            System.out.println();
+            print += "Custo Total Aresta: " + custoTotalAresta+"\n";
             clientes = vehicles.get(i).getRota().size() - 2;
-            //System.out.println("Clientes atendidos: " + clientes);
+            print += "Clientes atendidos: " + clientes+"\n\n";
             clientesAtendidos += clientes;
         }
-        label.setText("Custo total: " + custoTotal);
-        //System.out.println("Total Clientes atendidos: " + clientesAtendidos);
-        System.out.println("Custo total: " + custoTotal);
-        System.out.println();
+        print += "Custo total: " + custoTotal+"\n\n";
+        print(print);
+        textArea.setText(textArea.getText()+"\n----------------------------------\n"+print);
+        
+        
 
+    }
+    
+    public void print(String print){
+        System.out.print(print);
     }
 
     public void swapVizinhanca() {
@@ -266,8 +317,6 @@ public class FXMLController implements Initializable {
                 }
 
                 if (custoTotalAresta2 < custoTotalAresta1) {
-
-                    //System.err.println("Custo "+custoTotalAresta2);
                     custoTotalAresta1 = custoTotalAresta2;
                     theAuxVehicles = auxVehicles.get(n - 1);
                 }
