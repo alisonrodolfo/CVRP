@@ -28,8 +28,8 @@ Neste projeto vai conter:
    *  Implementação dos movimentos de vizinhança (Mínimo 3)
    *  Implementação do algoritmo de busca local chamado VND (Variable Neighborhood Descent)
 
-O motor é desenvolvido é baseado em Java.
 
+# O motor é desenvolvido é baseado em Java.
 
 
 # Introdução
