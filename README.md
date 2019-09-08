@@ -29,11 +29,6 @@ Neste projeto vai conter:
    *  Implementação do algoritmo de busca local chamado VND (Variable Neighborhood Descent)
 
 
-# O motor é desenvolvido é baseado em JavaFX.
-
-Para Compilar o projeto de forma fácil, basta abrir utilizando Apache NetBeans 11 
-
-
 
 # Introdução
 
@@ -44,4 +39,9 @@ Para Compilar o projeto de forma fácil, basta abrir utilizando Apache NetBeans 
 </p>
 
 Nesse problema, uma frota de veículos é utilizada para visitar um conjunto de clientes realizando entregas de produtos. Cada veículo possui a mesma capacidade e cada cliente requer uma certa quantidade de produtos. O objetivo é criar um conjunto de rotas (uma para cada veículo) onde cada cliente é visitado exatamente uma vez, todas as demandas são atendidas sem exceder a capacidade dos veículos, e o custo de transporte é minimizado.
+
+# O motor é desenvolvido é baseado em JavaFX.
+
+Para Compilar o projeto de forma fácil, basta abrir utilizando Apache NetBeans 11 
+
 
