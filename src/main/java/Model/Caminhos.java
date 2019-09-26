@@ -6,6 +6,7 @@
 package Model;
 
 import com.alisonbarreiro.cvrp.FXMLController;
+import static com.alisonbarreiro.cvrp.FXMLController.arestas;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -39,11 +40,10 @@ public class Caminhos {
         this.toString();
         int caminhosAresta = 0;
 
-        
-       for (int cityIndex = 0; cityIndex < CaminhosControl.numberOfCities() - 1; cityIndex++) {
-          setCity(cityIndex, CaminhosControl.getCity(cityIndex+1));
+        for (int cityIndex = 0; cityIndex < CaminhosControl.numberOfCities() - 1; cityIndex++) {
+            setCity(cityIndex, CaminhosControl.getCity(cityIndex + 1));
         }
-        
+
         /*
         
         tour.add(CaminhosControl.getCity(0));
@@ -59,8 +59,7 @@ public class Caminhos {
 
         }
         tour.add(CaminhosControl.getCity(0));
-        */
-        
+         */
         //System.out.println(tour.toString());
         // Randomly reorder the tour
         //Collections.shuffle(tour);
@@ -91,6 +90,15 @@ public class Caminhos {
     public int getDistance() {
         if (distance == 0) {
             int tourDistance = 0;
+            int aux1, aux2;
+           
+            tourDistance += FXMLController.arestas.get(0).get(getCity(0).getId()).getPeso();
+            for (int j1 = 0, j2 = 1; j1 < tourSize() - 1; j1++, j2++) {
+                aux1 = getCity(j1).getId();
+                aux2 = getCity(j2).getId();
+                tourDistance += FXMLController.arestas.get(aux1).get(aux2).getPeso();
+
+            }/*
             // Loop through our tour's cities
             for (int cityIndex = 0; cityIndex < tourSize(); cityIndex++) {
                 // Get city we're travelling from
@@ -106,8 +114,10 @@ public class Caminhos {
                 }
                 // Get the distance between the two cities
                 //System.out.println("D: " + tourSize());
-                tourDistance += fromCity.distanceTo(destinationCity);
+                tourDistance += FXMLController.arestas.get(fromCity.getId()).get(destinationCity.getId()).getPeso();
+                //tourDistance += fromCity.distanceTo(destinationCity);
             }
+            */
             distance = tourDistance;
         }
         return distance;
@@ -125,11 +135,12 @@ public class Caminhos {
 
     @Override
     public String toString() {
+        
         String geneString = "0";
         for (int i = 0; i < tourSize(); i++) {
-            geneString += ","+getCity(i);
+            geneString += "," + getCity(i);
         }
-        geneString += ";";
+        //geneString += ";";
         return geneString;
     }
 

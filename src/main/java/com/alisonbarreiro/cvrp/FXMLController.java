@@ -27,9 +27,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class FXMLController implements Initializable {
 
-    private static ArrayList<Vertice> vertices = new ArrayList<Vertice>();
+    public static final ArrayList<Vertice> vertices = new ArrayList<Vertice>();
     public static final ArrayList<ArrayList<Aresta>> arestas = new ArrayList<ArrayList<Aresta>>();
-    
+
     public int NUM_CLIENTES = 0;
     public int MELHOR = 0;
 
@@ -51,7 +51,9 @@ public class FXMLController implements Initializable {
 
     private static final ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 
-    ArrayList<Vehicle> definitiveVehicles = new ArrayList<Vehicle>();
+    public static final ArrayList<Vehicle> definitiveVehicles = new ArrayList<Vehicle>();
+    
+     public static final ArrayList<Vehicle> definitiveVehicles2 = new ArrayList<Vehicle>();
 
     private long inicio = System.currentTimeMillis();
     private long fim = System.currentTimeMillis();
@@ -136,13 +138,12 @@ public class FXMLController implements Initializable {
 
             heuristica = new Heuristica();
             // + choiceBox.getValue()
-            //addAll("src/main/resources/instancias_teste/"+ choiceBox.getValue());
-            addCvrpCup("src/main/resources/cvrp-cup/cvrp3.txt");
+            addAll("src/main/resources/instancias_teste/" + choiceBox.getValue());
+            //addCvrpCup("src/main/resources/cvrp-cup/cvrp3.txt");
             // read the data
 
             vizinhoMaisProximo();
-            
-            
+
         }
     };
 
@@ -167,7 +168,7 @@ public class FXMLController implements Initializable {
         textcapacity.setText("");
         textArea.setText("");
         carregarTableViewCliente();*/
-        
+
         System.out.println(NUM_CLIENTES);
 
     }
@@ -181,39 +182,31 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        MELHOR = 0;
+        textArea.setText("");
+        textname.setText("");
+        textdimension.setText("");
+        textvehicles.setText("");
+        textcapacity.setText("");
+        textArea.setText("");
 
-        for (int j = 0; j < NUM_VEHICLES; j++) {
-            CaminhosControl.clear();
-            //System.out.println("RRRR: "+vehicles.get(j).getRota().get(0).getId());
-            for (int i = 0; i < vehicles.get(j).getRota().size()-1; i++) {
-                
-                Vertice vertice = new Vertice(vehicles.get(j).getRota().get(i).getId(), vehicles.get(j).getRota().get(i).getDemanda(), vehicles.get(j).getRota().get(i).isIsVisitado(), vehicles.get(j).getRota().get(i).getX(), vehicles.get(j).getRota().get(i).getY());
+        vertices.clear();
+        arestas.clear();
+        vehicles.clear();
+        definitiveVehicles.clear();
+        VEHICLE_CAPACITY = 0;
+        NUM_VERTICE = 0;
+        NUM_VEHICLES = 0;
+        NUM_OTIMA = 0;
 
-                CaminhosControl.addCliente(vertice);
-            }
+        textArea.setText("");
 
-            // Initialize population
-            Population pop = new Population(50, true);
-            //System.out.println("Initial distance: " + pop.getFittest().getDistance());
+        heuristica = new Heuristica();
+        // + choiceBox.getValue()
+        addAll("src/main/resources/instancias_teste/" + choiceBox.getValue());
+        //addCvrpCup("src/main/resources/cvrp-cup/cvrp3.txt");
+        // read the data
 
-            // Evolve population for 100 generations
-            pop = GA.evolvePopulation(pop);
-            for (int i = 0; i < 10000; i++) {
-                pop = GA.evolvePopulation(pop);
-            }
-            // Print final results
-            //System.out.println("Finished");
-            //System.out.println("Final distance: " + pop.getFittest().getDistance());
-            //System.out.println("Solution:");
-            //System.out.print("0,");
-            System.out.println(pop.getFittest());
-            MELHOR += pop.getFittest().getDistance();
-            MELHOR += arestas.get(pop.getFittest().getCity(pop.getFittest().tourSize()-1).getId()).get(0).getPeso();
-             //System.out.println("POP: @@ "+pop.getFittest().getCity(pop.getFittest().tourSize()-1).getId());
-        }
-       // addCvrpCup("src/main/resources/cvrp-cup/cvrp1.txt");
-       System.out.println("ISSO: @@ "+MELHOR);
+        vizinhoMaisProximo();
     }
 
     public void carregarTableViewCliente() {
@@ -252,23 +245,67 @@ public class FXMLController implements Initializable {
     // FUNÇÃO QUE GERA OS NOVOS VIZINHOS
     public void genetica() {
         ArrayList<Vehicle> auxVehicles = new ArrayList<Vehicle>();
-        ArrayList<Vehicle> theAuxVehicles = new ArrayList<Vehicle>();
-        ArrayList<Integer> visitados = new ArrayList<Integer>();
 
-        int custoTotalAresta = 0;
+        definitiveVehicles2.clear();
 
         int MAX_GENETICA = NUM_VERTICE * 1000;
         int MAX_TIME = NUM_VERTICE * 5;
 
-        boolean isTrocando = true;
-
         random = new Random();
-
-        int max = 0;
-        //CRITÉRIOS DE PARADA
+        int custoInicial = 0;
 
         inicio = System.currentTimeMillis();
 
+        MELHOR = 0;
+
+        for (int j = 0; j < NUM_VEHICLES; j++) {
+            CaminhosControl.clear();
+            //System.out.println("RRRR: "+vehicles.get(j).getRota().get(0).getId());
+            for (int i = 0; i < vehicles.get(j).getRota().size() - 1; i++) {
+
+                Vertice vertice = new Vertice(vehicles.get(j).getRota().get(i).getId(), vehicles.get(j).getRota().get(i).getDemanda(), vehicles.get(j).getRota().get(i).isIsVisitado(), vehicles.get(j).getRota().get(i).getX(), vehicles.get(j).getRota().get(i).getY());
+
+                CaminhosControl.addCliente(vertice);
+            }
+
+            // Initialize population
+            Population pop = new Population(50, true);
+            custoInicial += (pop.getFittest().getDistance() + arestas.get(pop.getFittest().getCity(pop.getFittest().tourSize() - 1).getId()).get(0).getPeso());
+            System.out.println("Custo Inicial: " + (pop.getFittest().getDistance() + arestas.get(pop.getFittest().getCity(pop.getFittest().tourSize() - 1).getId()).get(0).getPeso()));
+            //System.out.println(pop.getFittest());
+            System.out.println();
+            // Evolve population for generations
+            pop = GA.evolvePopulation(pop);
+            for (int i = 0; i < 10000; i++) {
+                pop = GA.evolvePopulation(pop);
+            }
+
+            System.out.println("Solução:");
+
+            MELHOR += pop.getFittest().getDistance();
+            MELHOR += arestas.get(pop.getFittest().getCity(pop.getFittest().tourSize() - 1).getId()).get(0).getPeso();
+
+            System.out.println("Custo Final " + MELHOR);
+            String print = pop.getFittest().toString();
+
+            System.out.println("--------------------------------------------------------------------------------");
+            //System.out.println("POP: @@ "+pop.getFittest().getCity(pop.getFittest().tourSize()-1).getId());
+            String tokens[] = print.split(",");
+            Vehicle vertics = new Vehicle(j, VEHICLE_CAPACITY, VEHICLE_CAPACITY, 0, false, 0);
+            for (int h = 0; h < tokens.length; h++) {
+                //System.out.println(tokens[h]);
+                vertics.getRota().add(vertices.get(Integer.parseInt(tokens[h])));
+
+            }
+            vertics.getRota().add(vertices.get(0));
+            auxVehicles.add(vertics);
+            definitiveVehicles2.add(auxVehicles.get(j));
+
+        }
+        // addCvrpCup("src/main/resources/cvrp-cup/cvrp1.txt");
+        //System.out.println("Custo Total: @@ "+MELHOR);
+
+        /*
         while (max <= MAX_GENETICA) {
 
             // PARA TODOS OS NÓS DE UM CAMINHO SÃO GERADAS TROCAS DE ARESTAS
@@ -338,11 +375,12 @@ public class FXMLController implements Initializable {
                 definitiveVehicles.set(i, theAuxVehicles.get(arestaAux));
             }
             max++;
-        }
-
+        }*/
         fim = System.currentTimeMillis();
 
-        heuristica.setMetaMelhor(custoAresta(definitiveVehicles));
+        heuristica.setMetaMedia(custoInicial);
+
+        heuristica.setMetaMelhor(custoAresta(definitiveVehicles2));
 
         heuristica.setMetaTempo((fim - inicio) + "ms");
 
@@ -354,7 +392,7 @@ public class FXMLController implements Initializable {
 
         listCodes.add(heuristica);
 
-        this.imprimiRota(definitiveVehicles);
+        this.imprimiRota(definitiveVehicles2);
     }
 
     public void vizinhoMaisProximo() {
@@ -390,7 +428,7 @@ public class FXMLController implements Initializable {
                         if (vehicles.get(i).verificaCargaAtual(vertices.get(n).getDemanda())) {
                             //System.out.println("Valor de J:"+j);
                             if (arestas.get(j).get(n).getPeso() != 0 && arestas.get(j).get(n).getPeso() < menorDistancia) {
-                                    //System.out.println("PESO"+arestas.get(j).get(n).getPeso());
+                                //System.out.println("PESO"+arestas.get(j).get(n).getPeso());
                                 menorDistancia = arestas.get(j).get(n).getPeso();
                                 //atualiza o cliente
                                 verticeAtual = n;
@@ -426,69 +464,9 @@ public class FXMLController implements Initializable {
             heuristica.setMediaSolucao(custoAresta(vehicles));
 
         }
-        this.imprimiRota(vehicles);
 
-        //this.swapVizinhanca();
-    }
+       
 
-    public void vizinhoMaisProximoSolucao() {
-        int menorDistancia = 0;
-        int verticeAtual = 0;
-        int custoTotalAresta = 0;
-
-        for (int i = 0; i < NUM_VEHICLES; i++) {
-
-            custoTotalAresta = 0;
-
-            vertices.get(0).setIsVisitado(false);
-
-            vehicles.add(new Vehicle(i, VEHICLE_CAPACITY, VEHICLE_CAPACITY, verticeAtual, false, 0));
-
-            //adiciona o deposito no inicio da rota
-            vehicles.get(i).newVertice(vertices.get(0));
-            vertices.get(0).setIsVisitado(true);
-
-            Solucao definitiva = null;
-
-            for (int n = 1; n < NUM_VERTICE; n++) {
-
-                definitiva = null;
-
-                if (!(vertices.get(n).isIsVisitado())) {
-                    definitiva = new Solucao(vehicles.get(i));
-                    definitiva.setVertices((ArrayList<Vertice>) vertices.clone());
-
-                    definitiva.getVehicle().newVertice(vertices.get(n));
-                    definitiva.getVertices().get(n).setIsVisitado(true);
-
-                    definitiva = solucao(definitiva, menorDistancia, n, i, custoTotalAresta);
-
-                    String print = "[DEPOSITO -> ";
-                    for (int j = 0; j < definitiva.getVehicle().getRota().size(); j++) {
-                        print += definitiva.getVehicle().getRota().get(j).getId() + " -> ";
-                    }
-                    print += " DEPOSITO]\n";
-                    int aux1, aux2, custo = 0;
-                    for (int j1 = 0, j2 = 1; j1 < definitiva.getVehicle().getRota().size() - 1; j1++, j2++) {
-                        aux1 = definitiva.getVehicle().getRota().get(j1).getId();
-                        aux2 = definitiva.getVehicle().getRota().get(j2).getId();
-                        custo += arestas.get(aux1).get(aux2).getPeso();
-
-                    }
-                    print += "\nCUsto: " + custo + " i: " + n + "\n";
-                    print(print);
-                }
-
-            }
-
-            vehicles.set(i, definitiva.getVehicle());
-            vertices = (ArrayList<Vertice>) definitiva.getVertices().clone();
-
-            vehicles.get(i).newVertice(vertices.get(0));
-            custoTotalAresta += arestas.get(verticeAtual).get(0).getPeso();
-            vehicles.get(i).setCaminhoFeito(custoTotalAresta);
-
-        }
         this.imprimiRota(vehicles);
 
         this.swapVizinhanca();
@@ -615,6 +593,13 @@ public class FXMLController implements Initializable {
                     arestasFor.add(new Aresta(Integer.parseInt(tokens[j]), j));
 
                 }
+                /*
+                for(int gg = 0; gg < arestasFor.size() ; gg++){
+                    System.out.print("L: "+i+" C: "+gg+" ");
+                    System.out.print("Peso: "+arestasFor.get(gg).getPeso()+"|");
+                }
+                System.out.println();
+                 */
                 arestas.add(arestasFor);
                 linha = lerArq.readLine();
 
@@ -688,8 +673,6 @@ public class FXMLController implements Initializable {
                 dados = linha.trim().replaceAll("\t", "").replaceAll("\\s+", " ");
                 String tokens[] = dados.split(" ");
 
-            
-
                 if (tokens[0].equalsIgnoreCase("" + i)) {
                     vertices.get(i).setX(Integer.parseInt(tokens[1]));
                     vertices.get(i).setY(Integer.parseInt(tokens[2]));
@@ -753,12 +736,12 @@ public class FXMLController implements Initializable {
                     clientes = vehicles.get(n).getRota().size() - 2;
                     print += "Clientes atendidos: " + clientes + "\n\n";
                     clientesAtendidos += clientes;
-                    
+
                 }
             }
 
         }
-        NUM_CLIENTES += clientesAtendidos; 
+        NUM_CLIENTES += clientesAtendidos;
 
         print += "Custo total: " + custoTotal + "\n\n";
         print(print);
@@ -778,22 +761,26 @@ public class FXMLController implements Initializable {
         Vehicle theAuxVehicles = null;
         int custoTotalAresta1 = 0;
         for (int i = 0; i < NUM_VEHICLES; i++) {
+            custoTotalAresta1 = 0;
+            theAuxVehicles = null;
             theAuxVehicles = vehicles.get(i);
             int aux1, aux2, custoTotalAresta2 = 0;
-            for (int j1 = 0, j2 = 1; j1 < vehicles.get(i).getRota().size() - 1; j1++, j2++) {
+            for (int j1 = 0, j2 = 1; j1 < theAuxVehicles.getRota().size() - 1; j1++, j2++) {
                 aux1 = vehicles.get(i).getRota().get(j1).getId();
                 aux2 = vehicles.get(i).getRota().get(j2).getId();
                 custoTotalAresta1 += arestas.get(aux1).get(aux2).getPeso();
             }
+            
+   
 
             auxVehicles.clear();
-            for (int n = 1; n < (vehicles.get(i).getRota().size() - 2); n++) {
+            for (int n = 1; n < (theAuxVehicles.getRota().size() - 2); n++) {
                 //System.out.println(" V: "+((vehicles.get(i).getRota().size() - 2)/2));
 
-                auxVehicles.add(new Vehicle(vehicles.get(i).getId(), vehicles.get(i).getCapacidadeTotal(), vehicles.get(i).getCargaAtual(),
-                        vehicles.get(i).getVerticeAtual(), vehicles.get(i).isIsEntragando(), vehicles.get(i).getCaminhoFeito()));
+                auxVehicles.add(new Vehicle(theAuxVehicles.getId(), theAuxVehicles.getCapacidadeTotal(), theAuxVehicles.getCargaAtual(),
+                        theAuxVehicles.getVerticeAtual(), theAuxVehicles.isIsEntragando(), theAuxVehicles.getCaminhoFeito()));
 
-                auxVehicles.get(n - 1).setRota((Vector<Vertice>) vehicles.get(i).getRota().clone());
+                auxVehicles.get(n - 1).setRota((Vector<Vertice>) theAuxVehicles.getRota().clone());
 
                 Vertice auxVertice;
 
@@ -803,14 +790,15 @@ public class FXMLController implements Initializable {
                 auxVehicles.get(n - 1).getRota().set(n + 1, auxVertice);
 
                 custoTotalAresta2 = 0;
-                for (int j1 = 0, j2 = 1; j1 < vehicles.get(i).getRota().size() - 1; j1++, j2++) {
+                for (int j1 = 0, j2 = 1; j1 < auxVehicles.get(n - 1).getRota().size() - 1; j1++, j2++) {
                     aux1 = auxVehicles.get(n - 1).getRota().get(j1).getId();
                     aux2 = auxVehicles.get(n - 1).getRota().get(j2).getId();
                     custoTotalAresta2 += arestas.get(aux1).get(aux2).getPeso();
 
                 }
-
+                System.out.println(custoTotalAresta2+" < "+custoTotalAresta1);
                 if (custoTotalAresta2 < custoTotalAresta1) {
+                    
                     custoTotalAresta1 = custoTotalAresta2;
                     theAuxVehicles = auxVehicles.get(n - 1);
                 }
@@ -845,7 +833,7 @@ public class FXMLController implements Initializable {
                     theAuxVehicles2.getRota().set((theAuxVehicles2.getRota().size() - 2), vertAux);
                 }
             }
-             */
+            
             int custoTotalAresta3 = 0;
             for (int j1 = 0, j2 = 1; j1 < theAuxVehicles2.getRota().size() - 1; j1++, j2++) {
                 aux1 = theAuxVehicles2.getRota().get(j1).getId();
@@ -859,8 +847,8 @@ public class FXMLController implements Initializable {
                 // System.out.println("D: " + custoTotalAresta3 + " DU: " + custoTotalAresta1);
                 custoTotalAresta1 = custoTotalAresta3;
                 theAuxVehicles = theAuxVehicles2;
-            }
-
+            } */
+            System.out.println("----------------");
             definitiveVehicles.add(theAuxVehicles);
 
         }
@@ -877,7 +865,6 @@ public class FXMLController implements Initializable {
 
         heuristica.setGap((int) d + "%");
 
-        heuristica.setMetaMedia(custoAresta(definitiveVehicles));
 
         this.imprimiRota(definitiveVehicles);
 
