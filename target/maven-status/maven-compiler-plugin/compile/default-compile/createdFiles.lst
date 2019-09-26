@@ -1,6 +1,13 @@
 com\alisonbarreiro\cvrp\MainApp.class
-Model\Aresta.class
-com\alisonbarreiro\cvrp\FXMLController.class
+Model\Busca.class
+Model\GA.class
+Model\Caminhos.class
 Model\Vertice.class
 com\alisonbarreiro\cvrp\FXMLController$1.class
+Model\Solucao.class
+Model\Aresta.class
+Model\CaminhosControl.class
+Model\Heuristica.class
+com\alisonbarreiro\cvrp\FXMLController.class
+Model\Population.class
 Model\Vehicle.class

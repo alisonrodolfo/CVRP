@@ -1,3 +1,137 @@
-.button {
-    -fx-font-weight: bold;
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 09/09/2017, 09:22:09
+    Author     : alison barreiro
+*/
+
+.mainFxmlClass {
+    -fx-background-size: 1000px;
 }
+
+
+.h1 {  -fx-font-size: 24pt;}
+.h2 {  -fx-font-size: 22pt;}
+.h3 {  -fx-font-size: 18pt;}
+.h4 {  -fx-font-size: 16pt;}
+.h5 {  -fx-font-size: 12pt;}
+.h6 {  -fx-font-size: 10pt;}
+
+/* ================ Barra Principal do aplicativo ======================== */
+.buttontop {
+    -fx-background-color: #1e90ff;
+    -fx-font-size: 12pt;
+    /* -fx-font-family: "Segoe UI Semibold"; */
+    -fx-text-fill: #FFFFFF;
+    
+    
+    -fx-text-alignment: center;
+}
+
+.buttontop:hover {
+    -fx-background-color: #107de8;
+    -fx-font-size: 12pt;
+    /* -fx-font-family: "Segoe UI Semibold"; */
+    -fx-text-fill: #FFFFFF;
+    
+    
+    -fx-text-alignment: center;
+}
+
+.buttontopmenu {
+    -fx-background-color: #1e90ff;
+    -fx-font-size: 12pt;
+    /* -fx-font-family: "Segoe UI Semibold"; 
+    -fx-text-fill: #FFFFFF;*/
+    
+    
+    -fx-text-alignment: center;
+}
+
+.buttontopmenu:hover {
+    -fx-background-color: #107de8;
+    -fx-font-size: 12pt;
+    /* -fx-font-family: "Segoe UI Semibold"; 
+    -fx-text-fill: #FFFFFF;*/
+    
+    
+    -fx-text-alignment: center;
+}
+
+/* ========================================================================== */
+
+
+
+/* ===========================Cadastrar Despesa============================== */
+
+.h1 > .name{
+    -fx-font-size: 24pt;
+    /* -fx-font-family: "Segoe UI Semibold"; */
+    -fx-text-fill: #FFFFFF; 
+}
+
+.buttonazul {
+    -fx-background-color: #1e90ff;
+    -fx-font-size: 12pt;
+    /* -fx-font-family: "Segoe UI Semibold"; */
+    -fx-text-fill: #FFFFFF;
+    
+    
+    -fx-text-alignment: center;
+}
+
+.buttonazul:hover {
+    -fx-background-color: #107de8;
+    -fx-font-size: 12pt;
+    /* -fx-font-family: "Segoe UI Semibold"; */
+    -fx-text-fill: #FFFFFF;
+    
+    
+    -fx-text-alignment: center;
+}
+
+.buttonazul_p {
+    -fx-background-color: #1e90ff;
+    -fx-font-size: 8pt;
+    /* -fx-font-family: "Segoe UI Semibold"; */
+    -fx-text-fill: #FFFFFF;
+    
+    
+    -fx-text-alignment: center;
+}
+
+.buttonazul_p:hover {
+    -fx-background-color: #107de8;
+    -fx-font-size: 8pt;
+    /* -fx-font-family: "Segoe UI Semibold"; */
+    -fx-text-fill: #FFFFFF;
+    
+    
+    -fx-text-alignment: center;
+}
+
+.buttonred {
+    -fx-background-color: #e2321b;
+    -fx-font-size: 12pt;
+    /* -fx-font-family: "Segoe UI Semibold"; */
+    -fx-text-fill: #FFFFFF;
+    
+    
+    -fx-text-alignment: center;
+}
+
+.buttonred:hover {
+    -fx-background-color: #b22715;
+    -fx-font-size: 12pt;
+    /* -fx-font-family: "Segoe UI Semibold"; */
+    -fx-text-fill: #FFFFFF;
+    
+    
+    -fx-text-alignment: center;
+}
+
+/* ========================================================================== */
+

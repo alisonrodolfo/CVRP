@@ -5,6 +5,8 @@
  */
 package Model;
 
+import com.alisonbarreiro.cvrp.FXMLController;
+
 /**
  *
  * @author Alison Rodolfo
@@ -13,10 +15,10 @@ public class Vertice {
     private int id;
     private int demanda;
     private boolean isVisitado;
-    private double x;
-    private double y;
+    private int x;
+    private int y;
 
-    public Vertice(int id, int demanda, boolean isVisitado, double x, double y) {
+    public Vertice(int id, int demanda, boolean isVisitado, int x, int y) {
         this.id = id;
         this.demanda = demanda;
         this.isVisitado = isVisitado;
@@ -56,25 +58,30 @@ public class Vertice {
         this.isVisitado = isVisitado;
     }
 
-    public double getX() {
+    public int getX() {
         return x;
     }
 
-    public void setX(double x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public double getY() {
+    public int getY() {
         return y;
     }
 
-    public void setY(double y) {
+    public void setY(int y) {
         this.y = y;
     }
 
     @Override
     public String toString() {
-        return "Vertice{" + "id=" + id + ", demanda=" + demanda + ", isVisitado=" + isVisitado + ", x=" + x + ", y=" + y + '}';
+        return "" + id;
+    }
+    
+    public double distanceTo(Vertice cliente) {
+        
+        return FXMLController.arestas.get(this.id).get(cliente.id).getPeso();
     }
 
     

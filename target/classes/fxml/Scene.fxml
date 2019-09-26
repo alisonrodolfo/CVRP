@@ -1,22 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="596.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alisonbarreiro.cvrp.FXMLController">
+<AnchorPane id="AnchorPane" prefHeight="898.0" prefWidth="100.0" style="-fx-background-color: #373737;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alisonbarreiro.cvrp.FXMLController">
     <children>
-        <Label id="NAME" fx:id="label" layoutX="295.0" layoutY="111.0" minHeight="16" minWidth="69" text="NAME:" />
-      <TextArea fx:id="textArea" editable="false" layoutX="140.0" layoutY="289.0" prefHeight="256.0" prefWidth="624.0" />
-      <ChoiceBox fx:id="choiceBox" layoutX="263.0" layoutY="37.0" prefHeight="47.0" prefWidth="341.0" />
-      <Label id="DIMENSION" layoutX="295.0" layoutY="137.0" text="DIMENSION:" />
-      <Label id="VEHICLES" layoutX="295.0" layoutY="166.0" text="VEHICLES:" />
-      <Label id="CAPACITY" layoutX="296.0" layoutY="192.0" text="CAPACITY:" />
-      <TextField id="textname" fx:id="textname" disable="true" editable="false" layoutX="433.0" layoutY="106.0" />
-      <TextField id="textdimension" fx:id="textdimension" disable="true" editable="false" layoutX="433.0" layoutY="133.0" />
-      <TextField id="textvehicles" fx:id="textvehicles" disable="true" editable="false" layoutX="433.0" layoutY="161.0" />
-      <TextField id="textcapacity" fx:id="textcapacity" disable="true" editable="false" layoutX="433.0" layoutY="188.0" />
-    </children>
+      <VBox layoutY="6.0" prefHeight="891.0" prefWidth="1651.0">
+         <children>
+            <Pane id="HeaderMenu" fx:id="headermenu" prefHeight="60.0" prefWidth="1772.0" style="-fx-background-color: #1e90ff;">
+               <children>
+                  <Button layoutX="93.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" styleClass="buttontop" stylesheets="@../css/style.css" text="Home" />
+                  <ChoiceBox fx:id="choiceBox" layoutX="297.0" layoutY="3.0" prefHeight="50.0" prefWidth="277.0" styleClass="..\css\style.css" />
+               </children>
+            </Pane>
+            <Pane prefHeight="840.0" prefWidth="1652.0">
+               <children>
+                  <AnchorPane id="anchorPaneMain" fx:id="anchorPaneMain" prefHeight="723.0" prefWidth="1651.0" style="-fx-background-color: #373737;">
+                     <children>
+                        <Pane prefHeight="836.0" prefWidth="1652.0" style="-fx-background-color: #373737;">
+                           <children>
+                              <Button id="handleMenuAnalisar" fx:id="handleMenuAnalisar" layoutX="75.0" layoutY="762.0"  onAction="#handleButtonAction"  prefHeight="37.0" prefWidth="164.0" styleClass="buttontop" stylesheets="@../css/style.css" text="Analisar" />
+                              <Button id="handleMenuLimpar" fx:id="handleMenuLimpar" layoutX="315.0" layoutY="762.0" onAction="#handleMenuLimpar" prefHeight="37.0" prefWidth="164.0" styleClass="buttonred" stylesheets="@../css/style.css" text="Limpar Tudo" />
+                              <TextArea fx:id="textArea" editable="false" layoutX="14.0" layoutY="159.0" prefHeight="555.0" prefWidth="503.0" />
+                              <TableView id="tableView" fx:id="tableView" layoutX="571.0" layoutY="36.0" prefHeight="705.0" prefWidth="1069.0">
+                                <columns>
+                                  <TableColumn id="tableColumNome" fx:id="tableColumNome" prefWidth="218.0" text="Instancia" />
+                                    <TableColumn id="tableColumOtima" fx:id="tableColumOtima" prefWidth="109.0" text="Otima" />
+                                  <TableColumn id="tableColumMedia" fx:id="tableColumMedia" prefWidth="98.0" text="Media" />
+                                    <TableColumn id="tableColumMelhor" fx:id="tableColumMelhor" prefWidth="81.0" text="Melhor" />
+                                    <TableColumn id="tableColumTempo" fx:id="tableColumTempo" prefWidth="93.0" text="Tempo" />
+                                    <TableColumn id="tableColumnGap" fx:id="tableColumnGap" prefWidth="68.0" text="Gap" />
+                                    <TableColumn id="tableColumMediaMeta" fx:id="tableColumMediaMeta" prefWidth="104.0" text="Media" />
+                                    <TableColumn id="tableColumMelhorMeta" fx:id="tableColumMelhorMeta" prefWidth="102.0" text="Melhor" />
+                                    <TableColumn id="tableColumTempoMeta" fx:id="tableColumTempoMeta" prefWidth="88.0" text="Tempo" />
+                                    <TableColumn id="tableColumnGapMeta" fx:id="tableColumnGapMeta" prefWidth="103.0" text="Gap" />
+                                </columns>
+                              </TableView>
+                              <Button id="handleMenuLimparTabela" fx:id="handleMenuLimparTabela" layoutX="1032.0" layoutY="762.0" onAction="#handleMenuLimparTabela" prefHeight="37.0" prefWidth="164.0" styleClass="buttonred" stylesheets="@../css/style.css" text="Limpar Tabela" />
+                              <Label id="NAME" fx:id="label" layoutX="93.0" layoutY="34.0" minHeight="16" minWidth="69" text="NAME:" />
+                              <Label id="DIMENSION" layoutX="93.0" layoutY="60.0" text="DIMENSION:" />
+                              <Label id="VEHICLES" layoutX="93.0" layoutY="89.0" text="VEHICLES:" />
+                              <Label id="CAPACITY" layoutX="94.0" layoutY="115.0" text="CAPACITY:" />
+                              <TextField id="textname" fx:id="textname" disable="true" editable="false" layoutX="231.0" layoutY="29.0" />
+                              <TextField id="textdimension" fx:id="textdimension" disable="true" editable="false" layoutX="231.0" layoutY="56.0" />
+                              <TextField id="textvehicles" fx:id="textvehicles" disable="true" editable="false" layoutX="231.0" layoutY="84.0" />
+                              <TextField id="textcapacity" fx:id="textcapacity" disable="true" editable="false" layoutX="231.0" layoutY="111.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

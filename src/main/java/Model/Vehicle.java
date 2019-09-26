@@ -12,7 +12,8 @@ import java.util.Vector;
  * @author Alison Rodolfo
  */
 public class Vehicle {
-
+        
+    private int id;
     private Vector<Vertice> rota = new Vector<Vertice>();
     private int capacidadeTotal;
     private int cargaAtual;
@@ -20,7 +21,8 @@ public class Vehicle {
     private boolean isEntragando;
     private int caminhoFeito;
 
-    public Vehicle(int capacidadeTotal, int cargaAtual, int verticeAtual, boolean isEntragando, int caminhoFeito) {
+    public Vehicle(int id, int capacidadeTotal, int cargaAtual, int verticeAtual, boolean isEntragando, int caminhoFeito) {
+        this.id = id;
         this.capacidadeTotal = capacidadeTotal;
         this.cargaAtual = cargaAtual;
         this.verticeAtual = verticeAtual;
@@ -28,6 +30,16 @@ public class Vehicle {
         this.caminhoFeito = caminhoFeito;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
+    
     public Vector<Vertice> getRota() {
         return rota;
     }
